@@ -17,7 +17,7 @@ export class NoteService {
   }
 
   saveNote(newNote: Note, noteIndex: number) {
-    console.log("note from service:", newNote);
+    // console.log("note from service:", newNote);
     if(noteIndex !== -1){
         this.notes[noteIndex] = newNote;
     } else {

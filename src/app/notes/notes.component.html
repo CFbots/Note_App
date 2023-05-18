@@ -2,11 +2,13 @@
     <div class="notes-list">
         <div class="notes-list-header">
             <h1>Notes</h1>
-            <button>+</button>
+            <button (click)="addNewnote()">+</button>
         </div>
-        <div *ngFor="let note of notes; let i = index" class="note-item" (click)="selectNote(i)">
-            <div class="note-title">{{ note.title }}</div>
-            <button (click)="deleteNote(i)" class="delete-btn">[X]</button>
+        <div class="note-list-titles">
+            <div *ngFor="let note of notes; let i = index" class="note-item" (click)="selectNote(i)">
+                <div class="note-title">{{ note.title }}</div>
+                <button (click)="deleteNote(i)" class="delete-btn">[X]</button>
+            </div>
         </div>
     </div>
     <form [formGroup]="noteForm" class="note-form" (ngSubmit)="onSubmit()">
@@ -16,8 +18,8 @@
         </div>
         <textarea placeholder="Note Content" class="note-input" formControlName="content"></textarea>
         <div class="btn">
-            <button [disabled]="!noteForm.touched" (click)="revertNote()" class="revert-btn">Revert</button>
-            <button [disabled]="!noteForm.valid || !noteForm.touched" type="submit" class="save-btn">Save</button>
+            <button [disabled]="!noteForm.dirty" (click)="revertNote()" class="revert-btn">Revert</button>
+            <button [disabled]="!noteForm.valid || !noteForm.dirty" type="submit" class="save-btn">Save</button>
         </div>
     </form>
 </div>

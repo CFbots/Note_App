@@ -10,6 +10,7 @@ import { NoteService } from '../services/note-service.service';
 })
 export class NotesComponent implements OnInit{
   notes!: Note[];
+  emptyNote: Note = { title: '', content: '' };
   noteForm!: FormGroup;
   selectedNoteIndex: number = -1;
   originalNote: Note | null = null;
@@ -32,8 +33,15 @@ export class NotesComponent implements OnInit{
     return this.noteForm.get('content');
   }
 
+  addNewnote(){
+    this.selectedNoteIndex = -1;
+    this.noteForm.reset(this.emptyNote, { emitEvent: false });
+    this.originalNote = null;
+  }
+
   onSubmit() {
-    console.log("here is the note:", this.noteForm.value);
+    // console.log("here is the note:", this.noteForm.value);
+    alert("Notw was saved");
     this.noteService.saveNote(this.noteForm.value, this.selectedNoteIndex);
     this.selectedNoteIndex = -1;
     this.originalNote = null;
@@ -42,6 +50,7 @@ export class NotesComponent implements OnInit{
 
   deleteNote(index: number) {
    this.noteService.deleteNote(index);
+   this.originalNote = null;
   }
 
   selectNote(index: number) {
@@ -53,13 +62,15 @@ export class NotesComponent implements OnInit{
       content: selectedNote.content
     });
     this.originalNote = {...selectedNote};
-    console.log("the original note:", this.originalNote);
+    // console.log("the original note:", this.originalNote);
   }
 
   revertNote(){
-    console.log("reverting!");
+    // console.log("reverting!");
     if(this.originalNote){
       this.noteForm.reset(this.originalNote, { emitEvent: false });
+    } else {
+      this.noteForm.reset(this.emptyNote);
     }
   }
   
