@@ -12,6 +12,7 @@ export class NotesComponent implements OnInit{
   notes!: Note[];
   noteForm!: FormGroup;
   selectedNoteIndex: number = -1;
+  originalNote: Note | null = null;
 
   constructor(private noteService: NoteService, private formBuilder: FormBuilder){}
 
@@ -35,6 +36,7 @@ export class NotesComponent implements OnInit{
     console.log("here is the note:", this.noteForm.value);
     this.noteService.saveNote(this.noteForm.value, this.selectedNoteIndex);
     this.selectedNoteIndex = -1;
+    this.originalNote = null;
     this.noteForm.reset();
   }
 
@@ -50,5 +52,15 @@ export class NotesComponent implements OnInit{
       title: selectedNote.title,
       content: selectedNote.content
     });
+    this.originalNote = {...selectedNote};
+    console.log("the original note:", this.originalNote);
   }
+
+  revertNote(){
+    console.log("reverting!");
+    if(this.originalNote){
+      this.noteForm.reset(this.originalNote, { emitEvent: false });
+    }
+  }
+  
 }

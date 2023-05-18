@@ -16,7 +16,7 @@
         </div>
         <textarea placeholder="Note Content" class="note-input" formControlName="content"></textarea>
         <div class="btn">
-            <button [disabled]="!noteForm.touched"class="revert-btn">Revert</button>
+            <button [disabled]="!noteForm.touched" (click)="revertNote()" class="revert-btn">Revert</button>
             <button [disabled]="!noteForm.valid || !noteForm.touched" type="submit" class="save-btn">Save</button>
         </div>
     </form>
